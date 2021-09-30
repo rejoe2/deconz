@@ -7,10 +7,10 @@ compatible with python 3.
 import os
 import json
 try:
-	from urllib.request import urlopen, urlretrieve
+    from urllib.request import urlopen, urlretrieve
 except ImportError:
-	from urllib2 import urlopen
-	from urllib import urlretrieve
+    from urllib2 import urlopen
+    from urllib import urlretrieve
 
 
 f = urlopen("http://fw.ota.homesmart.ikea.net/feed/version_info.json")
@@ -21,37 +21,37 @@ arr = json.loads(data.decode('utf-8'))
 otapath = '%s/otau' % os.path.expanduser('~')
 
 if not os.path.exists(otapath):
-	os.makedirs(otapath)
+    os.makedirs(otapath)
 
 for i in arr:
-	if 'fw_binary_url' in i:
-		url = i['fw_binary_url']
-		ls = url.split('/')
-		fname = ls[len(ls) - 1]
-		path = '%s/%s' % (otapath, fname)
+    if 'fw_binary_url' in i:
+	url = i['fw_binary_url']
+	ls = url.split('/')
+	fname = ls[len(ls) - 1]
+	path = '%s/%s' % (otapath, fname)
 
-		if not os.path.isfile(path):
-			urlretrieve(url, path)
-			print(path)
-		else:
-		    print('%s already exists' % fname)
+	if not os.path.isfile(path):
+	    urlretrieve(url, path)
+	    print(path)
+	else:
+	    print('%s already exists' % fname)
 
 
-f = urlopen("https://github.com/Koenkk/zigbee-OTA/raw/master/index.json")
-data = f.read()
+g = urlopen("https://github.com/Koenkk/zigbee-OTA/raw/master/index.json")
+gdata = g.read()
 
-arr = json.loads(data.decode('utf-8'))
+garr = json.loads(gdata.decode('utf-8'))
 
-for i in arr:
-	if 'fw_binary_url' in i:
-		url = i['url']
-		ls = url.split('/')
-		fname = ls[len(ls) - 1]
-		path = '%s/%s' % (otapath, fname)
+for i in garr:
+    if 'url' in i:
+	url = i['url']
+	ls = url.split('/')
+	fname = ls[len(ls) - 1]
+	path = '%s/%s' % (otapath, fname)
 
-		if not os.path.isfile(path):
-			urlretrieve(url, path)
-			print(path)
-		else:
-		    print('%s already exists' % fname)
+	if not os.path.isfile(path):
+	    urlretrieve(url, path)
+	    print(path)
+	else:
+	    print('%s already exists' % fname)
 
